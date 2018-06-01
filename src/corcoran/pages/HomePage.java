@@ -1,5 +1,6 @@
 package corcoran.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -25,24 +26,27 @@ public class HomePage {
 	
 	@FindBy(how = How.XPATH, using = "//div[@id='price-slider']/span")
 	private WebElement priceSlider;	
-		
+	
+	@FindBy(how = How.ID, using = "price-slider")
+	private WebElement priceSlideBar;		
+	
 	public HomePage(WebDriver driver){
 		this.driver = driver;
 		PageFactory.initElements(driver, this);		
 	}
 	
-	public void filterByLocation(String location) throws InterruptedException{
-		SeleniumUtils.waitForElementToBeVisible(driver, searchInput, 10);
-		searchInput.click();
-		
-		SeleniumUtils.waitForElementToBeVisible(driver, flatiron, 10);
-		flatiron.click();
+	public ResultsPage filterByLocation(String location) throws InterruptedException{
 		
 		Actions move = new Actions(driver);
-        Action action = (Action) move.dragAndDropBy(priceSlider, 50, 0).build();
+        Action action = (Action) move.dragAndDropBy(priceSlider, priceSlideBar.getSize().width*7/40, 0).build();
         action.perform();
         
-        SeleniumUtils.waitForElementToBeVisible(driver, seeResults, 10);
-		seeResults.click();			
+		searchInput.click();	
+		System.out.println("Waiting for flatiron");
+		SeleniumUtils.waitForElementToBeVisible(driver, By.id("Borough1Neighborhood39"), 15);
+		flatiron.click();				        
+		seeResults.click();	
+		
+		return new ResultsPage(driver);
 	}
 }

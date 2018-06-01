@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import corcoran.pages.HomePage;
+import corcoran.pages.ResultsPage;
 
 public class SearchApartmentTest {
 
@@ -29,6 +30,7 @@ public class SearchApartmentTest {
 		System.setProperty("webdriver.chrome.driver", "libs\\chromedriver.exe");
 		driver = new ChromeDriver(); 
 		driver.get("https://www.corcoran.com/");
+		driver.manage().window().maximize();
 	}
 
 	@After
@@ -38,7 +40,8 @@ public class SearchApartmentTest {
 	@Test
 	public void test() throws InterruptedException {
 		HomePage homePage = new HomePage(driver);
-		homePage.filterByLocation("");
+		ResultsPage resultsPage = homePage.filterByLocation("");
+		resultsPage.selectFirstListing();
 	}
 
 }
