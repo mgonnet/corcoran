@@ -40,14 +40,17 @@ public class SearchApartmentTest {
 
 	@Test
 	public void test() throws InterruptedException {
+		System.out.println("Search apartment above 800000 in flatiron");
 		Integer price = 800000;
 		
 		HomePage homePage = new HomePage(driver);
 		ResultsPage resultsPage = homePage.filterByLocationAndPrice("Flatiron");
 		PropertyPage propertyPage = resultsPage.selectFirstListing();
 		
-		boolean priceGraterThan = propertyPage.getPropertyPrice() >= price;
+		int propertyPrice = propertyPage.getPropertyPrice();
+		boolean priceGraterThan = propertyPrice >= price;
 
+		System.out.println("-> " + propertyPrice + " > " + price + "? - " + priceGraterThan);
 		assertTrue(priceGraterThan);		
 	}
 
