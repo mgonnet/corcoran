@@ -6,16 +6,13 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
-public class PropertyPage {
-
-	private WebDriver driver;
+public class PropertyPage extends BasePage{
 	
 	@FindBy(how = How.CLASS_NAME, using = "listing-price")
 	private WebElement price;
 	
 	public PropertyPage(WebDriver driver){
-		this.driver = driver;
-		PageFactory.initElements(driver, this);		
+		super(driver);
 	}
 	
 	public Integer getPropertyPrice(){

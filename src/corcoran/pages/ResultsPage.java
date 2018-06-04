@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import corcoran.framework.SeleniumUtils;
 
-public class ResultsPage {
+public class ResultsPage extends BasePage {
 
 	private WebDriver driver;
 	
@@ -20,8 +20,7 @@ public class ResultsPage {
 	private WebElement firstListing;
 	
 	public ResultsPage(WebDriver driver){
-		this.driver = driver;
-		PageFactory.initElements(driver, this);		
+		super(driver);		
 	}
 	
 	public PropertyPage selectFirstListing() throws InterruptedException{
