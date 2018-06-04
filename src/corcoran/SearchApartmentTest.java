@@ -2,11 +2,16 @@ package corcoran;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -14,9 +19,23 @@ import corcoran.pages.HomePage;
 import corcoran.pages.PropertyPage;
 import corcoran.pages.ResultsPage;
 
+@RunWith(Parameterized.class)
 public class SearchApartmentTest {
 
 	private WebDriver driver;
+	
+	private String location;
+	
+	@Parameters
+    public static Iterable data(){
+        return Arrays.asList(new Object[][]{
+                {"Flatiron"}
+        });
+    }
+	
+	public SearchApartmentTest(String location){
+		this.location=location;
+	}
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -44,7 +63,7 @@ public class SearchApartmentTest {
 		Integer price = 800000;
 		
 		HomePage homePage = new HomePage(driver);
-		ResultsPage resultsPage = homePage.filterByLocationAndPrice("Flatiron");
+		ResultsPage resultsPage = homePage.filterByLocationAndPrice(location);
 		PropertyPage propertyPage = resultsPage.selectFirstListing();
 		
 		int propertyPrice = propertyPage.getPropertyPrice();
