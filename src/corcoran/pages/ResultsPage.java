@@ -13,10 +13,10 @@ public class ResultsPage {
 
 	private WebDriver driver;
 	
-	@FindBy(how = How.XPATH, using = "/html/body/div[7]/div[1]/div[1]/div/span[3]")
+	@FindBy(how = How.XPATH, using = "//span[contains(text(), 'SEARCH RESULTS')]")
 	private WebElement searchResults;
 	
-	@FindBy(how = How.CSS, using = "div.address")
+	@FindBy(how = How.CLASS_NAME, using = "address")
 	private WebElement firstListing;
 	
 	public ResultsPage(WebDriver driver){
@@ -24,11 +24,13 @@ public class ResultsPage {
 		PageFactory.initElements(driver, this);		
 	}
 	
-	public void selectFirstListing() throws InterruptedException{
+	public PropertyPage selectFirstListing() throws InterruptedException{
 		System.out.println("SelectFirstListing");
 		
-		SeleniumUtils.waitForElementToBeVisible(driver, By.xpath("/html/body/div[7]/div[1]/div[1]/div/span[3]"), 15);
+		SeleniumUtils.waitForElementToBeVisible(driver, By.xpath("//span[contains(text(), 'SEARCH RESULTS')]"), 15);
 		firstListing.click();
+		
+		return new PropertyPage(driver);
 	}
 	
 }

@@ -8,6 +8,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import corcoran.framework.SeleniumUtils;
 
@@ -21,10 +23,10 @@ public class HomePage {
 	@FindBy(how = How.ID, using = "Borough1Neighborhood39")
 	private WebElement flatiron;
 	
-	@FindBy(how = How.XPATH, using = "(//button[@type='submit'])[5]")
+	@FindBy(how = How.CLASS_NAME, using = "FormTrigger")
 	private WebElement seeResults;	
 	
-	@FindBy(how = How.XPATH, using = "//div[@id='price-slider']/span")
+	@FindBy(how = How.CLASS_NAME, using = "ui-slider-handle")
 	private WebElement priceSlider;	
 	
 	@FindBy(how = How.ID, using = "price-slider")
@@ -38,12 +40,13 @@ public class HomePage {
 	public ResultsPage filterByLocation(String location) throws InterruptedException{
 		
 		Actions move = new Actions(driver);
-        Action action = (Action) move.dragAndDropBy(priceSlider, priceSlideBar.getSize().width*7/40, 0).build();
+        Action action = (Action) move.dragAndDropBy(priceSlider, priceSlideBar.getSize().width*10/40, 0).build();
         action.perform();
-        
-		searchInput.click();	
-		System.out.println("Waiting for flatiron");
-		SeleniumUtils.waitForElementToBeVisible(driver, By.id("Borough1Neighborhood39"), 15);
+                        
+		searchInput.click();		
+		
+		SeleniumUtils.waitForElementToBeVisible(driver, By.id("Borough1Neighborhood39"), 10);
+		
 		flatiron.click();				        
 		seeResults.click();	
 		

@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import corcoran.pages.HomePage;
+import corcoran.pages.PropertyPage;
 import corcoran.pages.ResultsPage;
 
 public class SearchApartmentTest {
@@ -39,9 +40,15 @@ public class SearchApartmentTest {
 
 	@Test
 	public void test() throws InterruptedException {
+		Integer price = 800000;
+		
 		HomePage homePage = new HomePage(driver);
 		ResultsPage resultsPage = homePage.filterByLocation("");
-		resultsPage.selectFirstListing();
+		PropertyPage propertyPage = resultsPage.selectFirstListing();
+		
+		boolean priceGraterThan = propertyPage.getPropertyPrice() >= price;
+
+		assertTrue(priceGraterThan);		
 	}
 
 }
