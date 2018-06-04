@@ -43,7 +43,7 @@ public class SearchApartmentTest {
 		Integer price = 800000;
 		
 		HomePage homePage = new HomePage(driver);
-		ResultsPage resultsPage = homePage.filterByLocation("");
+		ResultsPage resultsPage = homePage.filterByLocationAndPrice("Flatiron");
 		PropertyPage propertyPage = resultsPage.selectFirstListing();
 		
 		boolean priceGraterThan = propertyPage.getPropertyPrice() >= price;

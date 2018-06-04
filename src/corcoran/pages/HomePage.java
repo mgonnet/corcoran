@@ -19,10 +19,7 @@ import corcoran.framework.SeleniumUtils;
 public class HomePage extends BasePage{
 	
 	@FindBy(how = How.CSS, using = "span.secondary-btn.Primary-Color")
-	private WebElement searchInput;
-	
-	@FindBy(how = How.ID, using = "Borough1Neighborhood39")
-	private WebElement flatiron;
+	private WebElement searchInput;	
 	
 	@FindBy(how = How.CLASS_NAME, using = "FormTrigger")
 	private WebElement seeResults;	
@@ -37,19 +34,28 @@ public class HomePage extends BasePage{
 		super(driver);		
 	}
 	
-	public ResultsPage filterByLocation(String location) throws InterruptedException{
+	public ResultsPage filterByLocationAndPrice(String location) throws InterruptedException{
 		
 		Actions move = new Actions(driver);
         Action action = (Action) move.dragAndDropBy(priceSlider, priceSlideBar.getSize().width*10/40, 0).build();
         action.perform();
                         
-		searchInput.click();		
-		
-		SeleniumUtils.waitForElementToBeVisible(driver, By.id("Borough1Neighborhood39"), 10);
-		
-		flatiron.click();				        
+		searchInput.click();					
+		clickLocation(location);								
 		seeResults.click();	
 		
 		return new ResultsPage(driver);
+	}
+	
+	private void clickLocation(String location){
+		String locationXpathLocator = "//span[contains(text(), '" + location + "')]";
+		
+		WebDriverWait wait = new WebDriverWait(driver,15);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(locationXpathLocator)));
+		
+		WebElement locationSpan = driver.findElement(By.xpath(locationXpathLocator));
+
+		WebElement locationSubmit = driver.findElement(By.id(locationSpan.getAttribute("for")));
+		locationSubmit.click();
 	}
 }

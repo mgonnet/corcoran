@@ -6,12 +6,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import corcoran.framework.SeleniumUtils;
 
 public class ResultsPage extends BasePage {
-
-	private WebDriver driver;
 	
 	@FindBy(how = How.XPATH, using = "//span[contains(text(), 'SEARCH RESULTS')]")
 	private WebElement searchResults;
@@ -24,9 +24,10 @@ public class ResultsPage extends BasePage {
 	}
 	
 	public PropertyPage selectFirstListing() throws InterruptedException{
-		System.out.println("SelectFirstListing");
 		
-		SeleniumUtils.waitForElementToBeVisible(driver, By.xpath("//span[contains(text(), 'SEARCH RESULTS')]"), 15);
+		WebDriverWait wait = new WebDriverWait(driver,15);
+		wait.until(ExpectedConditions.visibilityOf(searchResults));
+		
 		firstListing.click();
 		
 		return new PropertyPage(driver);
